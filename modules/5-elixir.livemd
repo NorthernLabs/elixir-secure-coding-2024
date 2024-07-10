@@ -60,7 +60,7 @@ prev_count = :erlang.system_info(:atom_count)
 try do
   malicious_user_input
   # ONLY CHANGE LINE 8
-  |> String.to_existing_atom()
+  |> String.to_atom()
 rescue
   e -> {ArgumentError, e}
 end
@@ -110,7 +110,8 @@ name = Kino.Input.text("What's your name?")
 
 ```elixir
 textfield_value = Kino.Input.read(name)
-"Hello, " <> textfield_value
+{result, binding} = Code.eval_string("a", a: textfield_value)
+"Hello, " <> result
 ```
 
 **BONUS QUESTION**: How would you go about securing the code above?
@@ -167,7 +168,7 @@ end
 password = "HASH_OF_THE_USERS_ACTUAL_PASSWORD"
 # DO NOT EDIT ANY CODE ABOVE THIS LINE =====================
 
-user_input = "HASH_OF_USERS_ACTUAL_ASDFASDFASD"
+user_input = "HASH_OF_asdfasdf"
 
 # DO NOT EDIT ANY CODE BELOW THIS LINE (you may uncomment IO.puts) =============
 Benchee.run(%{
@@ -175,7 +176,7 @@ Benchee.run(%{
   "Constant" => fn -> Constant.compare(user_input, password) end
 }, time: 3, warmup: 2)
 
-IO.puts(:comparison_ran)
+# IO.puts(:comparison_ran)
 ```
 
 ## Boolean Coercion
@@ -224,7 +225,7 @@ user_input = "some_string_which_obviously_isnt_the_same_as_the_password"
 :ok
 # DO NOT EDIT ANY CODE ABOVE THIS LINE =====================
 
-if SecurityCheck.validate(user_input, password) or raise(SecurityCheck) do :you_let_a_baddie_in end
+# if SecurityCheck.validate(user_input, password) or raise(SecurityCheck) do :you_let_a_baddie_in end
 # if SecurityCheck.validate(user_input, password) || raise(SecurityCheck) do :you_let_a_baddie_in end
 ```
 
@@ -283,7 +284,7 @@ This prevents the table from being read by other processes, such as remote shell
 
 ```elixir
 # ONLY EDIT THIS LINE
-secret_table = :ets.new(:secret_table, [:private])
+secret_table = :ets.new(:secret_table, [:public])
 :ets.info(secret_table)[:protection]
 ```
 
