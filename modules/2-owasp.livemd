@@ -252,7 +252,7 @@ _HINT: Installed dependencies can be found at the very top, it was the very firs
 
 ```elixir
 # CHANGE ME
-vulnerable_dependency = :phoenix
+vulnerable_dependency = :plug
 
 # DO NOT CHANGE CODE BELOW THIS LINE ============================
 Application.spec(vulnerable_dependency)[:vsn] |> List.to_string() |> IO.puts()
